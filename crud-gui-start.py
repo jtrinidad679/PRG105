@@ -46,6 +46,9 @@ class CrudGUI:
     def open_menu(self):
         if self.radio_var.get() == 1:
             _ = LookGUI(self.master)
+
+        elif self.radio_var.get() == 2:
+            _ = AddGUI(self.master)
         else:
             tkinter.messagebox.showinfo('Function', 'still under construction')
 
@@ -107,6 +110,77 @@ class LookGUI:
 
     def back(self):
         self.look.destroy()
+
+
+class AddGUI:
+    def __init__(self, master):
+
+        # open the file, load to customers, close file. Do in each class
+        try:
+            input_file = open("customer_file.dat", 'rb')
+            self.customers = pickle.load(input_file)
+            input_file.close()
+        except (FileNotFoundError, IOError):
+            self.customers = {}
+
+        # tkinter.Toplevel() is like tkinter.Frame() but it opens in a new window
+        self.add = tkinter.Toplevel(master)
+        self.add.title('Add a customer')
+
+        # create Frames for this Toplevel window
+        self.top_frame = tkinter.Frame(self.add)
+        self.middle_frame = tkinter.Frame(self.add)
+        self.bottom_frame = tkinter.Frame(self.add)
+
+        # widgets for top frame - label and entry box for name
+        self.add_label = tkinter.Label(self.top_frame, text='Enter customer name to add: ')
+        self.add_entry = tkinter.Entry(self.top_frame, width=15)
+        self.email_label = tkinter.Label(self.top_frame, text='Enter customer email address to add: ')
+        self.email_entry = tkinter.Entry(self.top_frame, width=15)
+
+        # pack top frame
+        self.add_label.pack(side='left')
+        self.add_entry.pack(side='left')
+        self.email_label.pack(side='left')
+        self.email_entry.pack(side='left')
+
+        # middle frame - label for results
+        self.value = tkinter.StringVar()
+        self.info = tkinter.Label(self.middle_frame, text='Results: ')
+        self.result_label = tkinter.Label(self.middle_frame, textvariable=self.value)
+
+        # pack Middle frame
+        self.info.pack(side='left')
+        self.result_label.pack(side='left')
+
+        # buttons for bottom frame
+        self.add_button = tkinter.Button(self.bottom_frame, text='Add', command=self.add_person)
+        self.back_button = tkinter.Button(self.bottom_frame, text='Main Menu', command=self.back)
+
+        # pack bottom frame
+        self.add_button.pack(side='left')
+        self.back_button.pack(side='left')
+
+        # pack frames
+        self.top_frame.pack()
+        self.middle_frame.pack()
+        self.bottom_frame.pack()
+
+    def add_person(self):
+        name = self.add_entry.get()
+        email = self.email_entry.get()
+        if name in self.customers:
+            result = name + " already exists"
+        else:
+            result = self.customers.get(name, name + " " + email + " Will Be Added")
+            self.customers[name] = email
+            output_file = open("customer_file.dat", 'wb')
+            pickle.dump(self.customers, output_file)
+            output_file.close()
+        self.value.set(result)
+
+    def back(self):
+        self.add.destroy()
 
 
 def main():
