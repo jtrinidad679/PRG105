@@ -132,12 +132,13 @@ class AddGUI:
         self.top_frame = tkinter.Frame(self.add)
         self.middle_frame = tkinter.Frame(self.add)
         self.bottom_frame = tkinter.Frame(self.add)
+        self.last_frame = tkinter.Frame(self.add)
 
         # widgets for top frame - label and entry box for name
         self.add_label = tkinter.Label(self.top_frame, text='Enter customer name to add: ')
         self.add_entry = tkinter.Entry(self.top_frame, width=15)
-        self.email_label = tkinter.Label(self.top_frame, text='Enter customer email address to add: ')
-        self.email_entry = tkinter.Entry(self.top_frame, width=15)
+        self.email_label = tkinter.Label(self.middle_frame, text='Enter customer email address to add: ')
+        self.email_entry = tkinter.Entry(self.middle_frame, width=15)
 
         # pack top frame
         self.add_label.pack(side='left')
@@ -147,16 +148,16 @@ class AddGUI:
 
         # middle frame - label for results
         self.value = tkinter.StringVar()
-        self.info = tkinter.Label(self.middle_frame, text='Results: ')
-        self.result_label = tkinter.Label(self.middle_frame, textvariable=self.value)
+        self.info = tkinter.Label(self.bottom_frame, text='Results: ')
+        self.result_label = tkinter.Label(self.bottom_frame, textvariable=self.value)
 
         # pack Middle frame
         self.info.pack(side='left')
         self.result_label.pack(side='left')
 
         # buttons for bottom frame
-        self.add_button = tkinter.Button(self.bottom_frame, text='Add', command=self.add_person)
-        self.back_button = tkinter.Button(self.bottom_frame, text='Main Menu', command=self.back)
+        self.add_button = tkinter.Button(self.last_frame, text='Add', command=self.add_person)
+        self.back_button = tkinter.Button(self.last_frame, text='Main Menu', command=self.back)
 
         # pack bottom frame
         self.add_button.pack(side='left')
@@ -166,6 +167,7 @@ class AddGUI:
         self.top_frame.pack()
         self.middle_frame.pack()
         self.bottom_frame.pack()
+        self.last_frame.pack()
 
     def add_person(self):
         name = self.add_entry.get()
@@ -203,12 +205,13 @@ class ChangeGUI:
         self.top_frame = tkinter.Frame(self.change)
         self.middle_frame = tkinter.Frame(self.change)
         self.bottom_frame = tkinter.Frame(self.change)
+        self.last_frame = tkinter.Frame(self.change)
 
         # widgets for top frame - label and entry box for name
         self.name_label = tkinter.Label(self.top_frame, text='Enter customer name: ')
         self.name_entry = tkinter.Entry(self.top_frame, width=15)
-        self.email_label = tkinter.Label(self.top_frame, text='Enter new email address: ')
-        self.email_entry = tkinter.Entry(self.top_frame, width=15)
+        self.email_label = tkinter.Label(self.middle_frame, text='Enter new email address: ')
+        self.email_entry = tkinter.Entry(self.middle_frame, width=15)
 
         # pack top frame
         self.name_label.pack(side='left')
@@ -218,16 +221,16 @@ class ChangeGUI:
 
         # middle frame - label for results
         self.value = tkinter.StringVar()
-        self.info = tkinter.Label(self.middle_frame, text='Results: ')
-        self.result_label = tkinter.Label(self.middle_frame, textvariable=self.value)
+        self.info = tkinter.Label(self.bottom_frame, text='Results: ')
+        self.result_label = tkinter.Label(self.bottom_frame, textvariable=self.value)
 
         # pack Middle frame
         self.info.pack(side='left')
         self.result_label.pack(side='left')
 
         # buttons for bottom frame
-        self.change_button = tkinter.Button(self.bottom_frame, text='Change', command=self.change_email)
-        self.back_button = tkinter.Button(self.bottom_frame, text='Main Menu', command=self.back)
+        self.change_button = tkinter.Button(self.last_frame, text='Change', command=self.change_email)
+        self.back_button = tkinter.Button(self.last_frame, text='Main Menu', command=self.back)
 
         # pack bottom frame
         self.change_button.pack(side='left')
@@ -237,6 +240,7 @@ class ChangeGUI:
         self.top_frame.pack()
         self.middle_frame.pack()
         self.bottom_frame.pack()
+        self.last_frame.pack()
 
     def change_email(self):
         name = self.name_entry.get()
