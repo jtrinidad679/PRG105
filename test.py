@@ -217,15 +217,17 @@ class Horde:
         self.world_button.place(relx=0.8, rely=0.89)
 
     def save(self):
+        print(self.radio_var.get())
         characters_file = open('characters.txt', 'w')
-        if self.radio_var == 1:
+        if self.radio_var.get() == 1:
             character = characters_file.write("Orc")
-        elif self.radio_var == 2:
+        elif self.radio_var.get() == 2:
             character = characters_file.write("Undead")
-        elif self.radio_var == 3:
+        elif self.radio_var.get() == 3:
             character = characters_file.write("Tauren")
-        elif self.radio_var == 4:
+        elif self.radio_var.get() == 4:
             character = characters_file.write("Troll")
+        characters_file.close()
 
 
 def main():
