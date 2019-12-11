@@ -4,20 +4,24 @@ from PIL import ImageTk
 
 class WoW:
     def __init__(self, master):
+        # Creating the first window with a title and setting it to my desired window size.
         self.master = master
         self.master.title("World of Warcraft")
         master.geometry('1000x700')
 
-        # try:
-        characters_file = open('characters.txt', 'r')
-        file_contents = characters_file.read()
-        characters_file.close()
-        self.file_contents = Label(master, text=file_contents, font=("Helvetica", 25))
-        self.file_contents.place(relx=0, rely=0.1)
-        # file_contents.place(relx=0.2, rely=0.5)
-        # except FileNotFoundError:
-        #     print("You don't have any characters yet. Try making one!")
+        # Here we are trying to open the text file that holds the character information.
+        # Then, it will display the information we gathered from the save function in the main window.
+        # If the file cannot be found it will print the except statement.
+        try:
+            characters_file = open('characters.txt', 'r')
+            file_contents = characters_file.read()
+            characters_file.close()
+            self.file_contents = Label(master, text=file_contents, font=("Helvetica", 25))
+            self.file_contents.place(relx=0, rely=0.1)
+        except FileNotFoundError:
+            print("You don't have any characters yet. Try making one!")
 
+        # Creating labels and buttons and placing them in my desired locations.
         self.character_label = Label(master, text='Your Characters', fg='blue', font=("Helvetica", 30))
         self.character_label.place(anchor=NW)
         self.character_button = Button(master, text='Create New Character', font=("Helvetica", 30),
@@ -28,23 +32,16 @@ class WoW:
         self.character_button.place(relx=0, rely=1, anchor=SW)
         self.quit_button.place(relx=1, rely=1, anchor=SE)
 
+        # Using the canvas widget to insert an image of Ragnaros on the main screen.
         canvas = Canvas(master, width=500, height=600)
         canvas.pack(side=RIGHT)
         image = ImageTk.PhotoImage(file='wowza.jpg')
         canvas.create_image(265, 325, image=image)
         master.mainloop()
 
+        # The character_button once clicked will open up a new window titled: Faction Selector.
     def faction_menu(self):
         _ = Faction(self.master)
-
-    # def faction_menu(master):
-    #     faction_window = Toplevel(master)
-    #     faction_window.title("Faction Selector")
-    #     faction_window.geometry('1000x700')
-
-    # faction_description_label = Label(master,
-    #                                        text='Before you step foot into Azeroth, you must select a faction.'
-    #                                             'The factions available to you are:', font=("Helvetica", 30))
 
 
 class Faction:
@@ -54,11 +51,8 @@ class Faction:
         self.faction.geometry('1000x700')
 
         self.description_frame = Frame(self.faction)
-        # self.alliance_frame = Frame(self.faction)
-        # self.horde_frame = Frame(self.faction)
-        # self.alliance_frame = Frame(self.faction)
-        # self.horde_frame = Frame(self.faction)
 
+        # Creating labels that give the user information about the factions they will be creating characters for.
         self.faction_description_label = Label(self.description_frame,
                                                text='Before you step foot into Azeroth, you must select a faction.''\n'
                                                     'The factions available to you are:', font=("Helvetica", 30))
@@ -81,9 +75,11 @@ class Faction:
                                                     'see them destroyed.', relief=SUNKEN, bg='white', fg='red',
                                  font=("Helvetica", 16))
 
+        # Placing the labels.
         self.alliance_label.place(relx=0.6, rely=0.7)
         self.horde_label.place(relx=0.02, rely=0.7)
 
+        # Using canvas again to insert 2 separate pictures that display the Horde and Alliance logos.
         canvas = Canvas(self.faction, width=300, height=300)
         canvas.place(relx=0.63, rely=0.13)
         image = ImageTk.PhotoImage(file='alliance.jpg')
@@ -96,22 +92,21 @@ class Faction:
         canvas2.create_image(158, 150, image=image2)
         image2.place(relx=0.06, rely=0.13, anchor=NW)
 
+        # Packing the label and frame.
         self.faction_description_label.pack()
         self.description_frame.pack()
 
+        # Creating the buttons and placing them.
         self.alliance_button = Button(self.faction, text='Alliance', command=self.alliance, font=("Helvetica", 30),
                                       fg='blue')
         self.horde_button = Button(self.faction, text='Horde', command=self.horde, font=("Helvetica", 30), fg='red')
 
         self.alliance_button.place(relx=0.74, rely=0.6)
         self.horde_button.place(relx=0.17, rely=0.6)
-        # self.alliance_button.pack()
-        # self.horde_button.pack()
 
-        # self.alliance_frame.pack(side=LEFT)
-        # self.horde_frame.pack(side=LEFT)
         self.faction.mainloop()
 
+    # Each button once clicked will open a new window for the faction you select.
     def alliance(self):
         _ = Alliance(self.faction)
 
@@ -130,6 +125,10 @@ class Alliance:
         self.alliance_label.place(relx=0.06, rely=0)
         self.alliance_class_label.place(relx=0.6, rely=0)
 
+        # Creating radio buttons.
+        # One set of radio buttons follows the radio variable, and the other set follows the class variable.
+        # We have two separate radio buttons with different functions. One that selects your desired race,
+        # and one that selects your desired class.
         self.radio_var = IntVar()
         self.radio_var.set(1)
 
@@ -154,6 +153,7 @@ class Alliance:
                                    font=("Helvetica", 30))
         self.druid = Radiobutton(self.alliance, text='Druid', variable=self.class_var, value=7, font=("Helvetica", 30))
 
+        # Lots of placing stuff.
         self.human.place(relx=0.1, rely=0.1)
         self.dwarf.place(relx=0.1, rely=0.2)
         self.night_elf.place(relx=0.1, rely=0.3)
@@ -167,22 +167,25 @@ class Alliance:
         self.warlock.place(relx=0.6, rely=0.6)
         self.druid.place(relx=0.6, rely=0.7)
 
+        # Creating a label that prompts the user to enter their desired character name in the entry box.
         self.name_label = Label(self.alliance, text='Enter Name: ', font=("Helvetica", 30))
         self.name_entry = Entry(self.alliance, width=20)
 
         self.name_label.place(relx=0.3, rely=0.89)
         self.name_entry.place(relx=0.5, rely=0.9)
 
+        # Creating the Enter World button.
         self.world_button = Button(self.alliance, text='Enter World', command=self.save, font=("Helvetica", 30))
 
         self.world_button.place(relx=0.8, rely=0.89)
 
     def save(self):
-        # print(self.radio_var.get())
+        # The Enter World button when clicked will open the text file, gather the information the user has
+        # entered or selected and then close the file again.
         characters_file = open('characters.txt', 'w')
-
         character_name = self.name_entry.get()
         characters_file.write(character_name + " - ")
+
         if self.radio_var.get() == 1:
             characters_file.write("Human")
         elif self.radio_var.get() == 2:
@@ -222,11 +225,12 @@ class Horde:
         self.horde_label.place(relx=0.1, rely=0)
         self.horde_class_label.place(relx=0.6, rely=0)
 
+        # Creating radio buttons.
+        # One set of radio buttons follows the radio variable, and the other set follows the class variable.
+        # We have two separate radio buttons with different functions. One that selects your desired race,
+        # and one that selects your desired class.
         self.radio_var = IntVar()
         self.radio_var.set(1)
-
-        self.class_var = IntVar()
-        self.class_var.set(1)
 
         self.orc = Radiobutton(self.horde, text='Orc', variable=self.radio_var, value=1, font=("Helvetica", 30))
         self.undead = Radiobutton(self.horde, text='Undead', variable=self.radio_var, value=2, font=("Helvetica", 30))
@@ -234,10 +238,8 @@ class Horde:
                                   font=("Helvetica", 30))
         self.troll = Radiobutton(self.horde, text='Troll', variable=self.radio_var, value=4, font=("Helvetica", 30))
 
-        self.orc.place(relx=0.1, rely=0.1)
-        self.undead.place(relx=0.1, rely=0.2)
-        self.tauren.place(relx=0.1, rely=0.3)
-        self.troll.place(relx=0.1, rely=0.4)
+        self.class_var = IntVar()
+        self.class_var.set(1)
 
         self.warrior = Radiobutton(self.horde, text='Warrior', variable=self.class_var, value=1, font=("Helvetica", 30))
         self.hunter = Radiobutton(self.horde, text='Hunter', variable=self.class_var, value=2, font=("Helvetica", 30))
@@ -246,6 +248,12 @@ class Horde:
         self.shaman = Radiobutton(self.horde, text='Shaman', variable=self.class_var, value=5, font=("Helvetica", 30))
         self.mage = Radiobutton(self.horde, text='Mage', variable=self.class_var, value=6, font=("Helvetica", 30))
 
+        # Lots of placing stuff.
+        self.orc.place(relx=0.1, rely=0.1)
+        self.undead.place(relx=0.1, rely=0.2)
+        self.tauren.place(relx=0.1, rely=0.3)
+        self.troll.place(relx=0.1, rely=0.4)
+
         self.warrior.place(relx=0.6, rely=0.1)
         self.hunter.place(relx=0.6, rely=0.2)
         self.rogue.place(relx=0.6, rely=0.3)
@@ -253,22 +261,25 @@ class Horde:
         self.shaman.place(relx=0.6, rely=0.5)
         self.mage.place(relx=0.6, rely=0.6)
 
+        # Creating a label that prompts the user to enter their desired character name in the entry box.
         self.name_label = Label(self.horde, text='Enter Name: ', font=("Helvetica", 30))
         self.name_entry = Entry(self.horde, width=20)
 
         self.name_label.place(relx=0.3, rely=0.89)
         self.name_entry.place(relx=0.5, rely=0.9)
 
+        # Creating the Enter World button.
         self.world_button = Button(self.horde, text='Enter World', command=self.save, font=("Helvetica", 30))
 
         self.world_button.place(relx=0.8, rely=0.89)
 
     def save(self):
-        # print(self.radio_var.get())
+        # The Enter World button when clicked will open the text file, gather the information the user has
+        # entered or selected and then close the file again.
         characters_file = open('characters.txt', 'w')
-
         character_name = self.name_entry.get()
         characters_file.write(character_name + " - ")
+
         if self.radio_var.get() == 1:
             characters_file.write("Orc")
         elif self.radio_var.get() == 2:
