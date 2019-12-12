@@ -305,6 +305,10 @@ class Horde:
             characters_file.write(" Shaman")
         elif self.class_var.get() == 6:
             characters_file.write(" Mage")
+        elif self.class_var.get() == 7:
+            characters_file.write(" Druid")
+        elif self.class_var.get() == 8:
+            characters_file.write(" Warlock")
 
         characters_file.close()
 
