@@ -16,7 +16,7 @@ class WoW:
             characters_file = open('characters.txt', 'r')
             file_contents = characters_file.read()
             characters_file.close()
-            self.file_contents = Label(master, text=file_contents, font=("Helvetica", 25))
+            self.file_contents = Label(master, text=file_contents, font=("Helvetica", 28))
             self.file_contents.place(relx=0, rely=0.1)
         except FileNotFoundError:
             print("You don't have any characters yet. Try making one!")
@@ -171,8 +171,8 @@ class Alliance:
         self.name_label = Label(self.alliance, text='Enter Name: ', font=("Helvetica", 30))
         self.name_entry = Entry(self.alliance, width=20)
 
-        self.name_label.place(relx=0.3, rely=0.89)
-        self.name_entry.place(relx=0.5, rely=0.9)
+        self.name_label.place(relx=0.1, rely=0.89)
+        self.name_entry.place(relx=0.3, rely=0.9)
 
         # Creating the Enter World button.
         self.world_button = Button(self.alliance, text='Enter World', command=self.save, font=("Helvetica", 30))
@@ -247,6 +247,8 @@ class Horde:
         self.priest = Radiobutton(self.horde, text='Priest', variable=self.class_var, value=4, font=("Helvetica", 30))
         self.shaman = Radiobutton(self.horde, text='Shaman', variable=self.class_var, value=5, font=("Helvetica", 30))
         self.mage = Radiobutton(self.horde, text='Mage', variable=self.class_var, value=6, font=("Helvetica", 30))
+        self.druid = Radiobutton(self.horde, text='Druid', variable=self.class_var, value=7, font=("Helvetica", 30))
+        self.warlock = Radiobutton(self.horde, text='Warlock', variable=self.class_var, value=8, font=("Helvetica", 30))
 
         # Lots of placing stuff.
         self.orc.place(relx=0.1, rely=0.1)
@@ -258,15 +260,17 @@ class Horde:
         self.hunter.place(relx=0.6, rely=0.2)
         self.rogue.place(relx=0.6, rely=0.3)
         self.priest.place(relx=0.6, rely=0.4)
-        self.shaman.place(relx=0.6, rely=0.5)
-        self.mage.place(relx=0.6, rely=0.6)
+        self.mage.place(relx=0.6, rely=0.5)
+        self.warlock.place(relx=0.6, rely=0.6)
+        self.shaman.place(relx=0.6, rely=0.7)
+        self.druid.place(relx=0.6, rely=0.8)
 
         # Creating a label that prompts the user to enter their desired character name in the entry box.
         self.name_label = Label(self.horde, text='Enter Name: ', font=("Helvetica", 30))
         self.name_entry = Entry(self.horde, width=20)
 
-        self.name_label.place(relx=0.3, rely=0.89)
-        self.name_entry.place(relx=0.5, rely=0.9)
+        self.name_label.place(relx=0.1, rely=0.89)
+        self.name_entry.place(relx=0.3, rely=0.9)
 
         # Creating the Enter World button.
         self.world_button = Button(self.horde, text='Enter World', command=self.save, font=("Helvetica", 30))
